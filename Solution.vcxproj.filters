@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="App\Violet\Libraries\include\glad\glad.c" />
+    <ClCompile Include="App\Violet\Libraries\include\imgui\imgui.cpp" />
+    <ClCompile Include="App\Violet\Libraries\include\imgui\imgui_demo.cpp" />
+    <ClCompile Include="App\Violet\Libraries\include\imgui\imgui_draw.cpp" />
+    <ClCompile Include="App\Violet\Libraries\include\imgui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="App\Violet\Libraries\include\imgui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="App\Violet\Libraries\include\imgui\imgui_tables.cpp" />
+    <ClCompile Include="App\Violet\Libraries\include\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="App\Violet\Src\Camera.cpp" />
+    <ClCompile Include="App\Violet\Src\Color.cpp" />
+    <ClCompile Include="App\Violet\Src\Keyboard.cpp" />
+    <ClCompile Include="App\Violet\Src\Matrices.cpp" />
+    <ClCompile Include="App\Violet\Src\Mesh.cpp" />
+    <ClCompile Include="App\Violet\Src\Mouse.cpp" />
+    <ClCompile Include="App\Violet\Src\Quaternions.cpp" />
+    <ClCompile Include="App\Violet\Src\Shapes.cpp" />
+    <ClCompile Include="App\Violet\Src\SocketUDP.cpp" />
+    <ClCompile Include="App\Violet\Src\Vector.cpp" />
+    <ClCompile Include="App\Violet\Src\Window.cpp" />
+    <ClCompile Include="App\Violet\Src\WinSock.cpp" />
+    <ClCompile Include="App\main.cpp" />
+    <ClCompile Include="App\Map.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="App\Violet\Libraries\include\glad\glad.h" />
+    <ClInclude Include="App\Violet\Libraries\include\GLFW\glfw3.h" />
+    <ClInclude Include="App\Violet\Libraries\include\GLFW\glfw3native.h" />
+    <ClInclude Include="App\Violet\Libraries\include\imgui\imconfig.h" />
+    <ClInclude Include="App\Violet\Libraries\include\imgui\imgui.h" />
+    <ClInclude Include="App\Violet\Libraries\include\imgui\imgui_impl_glfw.h" />
+    <ClInclude Include="App\Violet\Libraries\include\imgui\imgui_impl_opengl3.h" />
+    <ClInclude Include="App\Violet\Libraries\include\imgui\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="App\Violet\Libraries\include\imgui\imgui_internal.h" />
+    <ClInclude Include="App\Violet\Libraries\include\imgui\imstb_rectpack.h" />
+    <ClInclude Include="App\Violet\Libraries\include\imgui\imstb_textedit.h" />
+    <ClInclude Include="App\Violet\Libraries\include\imgui\imstb_truetype.h" />
+    <ClInclude Include="App\Violet\Libraries\include\KHR\khrplatform.h" />
+    <ClInclude Include="App\Violet\Libraries\include\stb\stb_image.h" />
+    <ClInclude Include="App\Violet\Logging.h" />
+    <ClInclude Include="App\Violet\Math.h" />
+    <ClInclude Include="App\Violet\Networking.h" />
+    <ClInclude Include="App\Violet\Rendering.h" />
+    <ClInclude Include="App\Violet\SiVector.h" />
+    <ClInclude Include="App\Map.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="App\Resources\planets.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App\Violet\Src\Shaders\default.frag" />
+    <None Include="App\Violet\Src\Shaders\default.vert" />
+  </ItemGroup>
+</Project>
