@@ -14,6 +14,7 @@ int main() {
     while (window.is_open()) {
         window.poll_events();
         window.clear(Vi::Color::blue());
+        map.control_camera(window);
         map.render(window);
         window.display();
     }

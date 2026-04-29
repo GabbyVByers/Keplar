@@ -11,7 +11,7 @@ namespace App {
         /* The Sun */
         Planet sun{};
         sun.name = "Sol";
-        Vi::ID sun_id = planets.add(sun);
+        sun_id = planets.add(sun);
         Planet& s = planets.get_element_by_id(sun_id);
         s.self_id = sun_id;
 
@@ -150,12 +150,31 @@ namespace App {
 
     void Map::render(Vi::Window& window) {
         for (Planet& planet : planets) {
+            planet.mesh.scale = scale; // not scaled to planet radius
+            planet.mesh.position = planet.init_pos * scale;
+
             window.draw(planet.mesh, camera);
         }
+
+        Planet& sun = planets.get_element_by_id(sun_id);
+        Vi::Log::info("Sun Mesh Radius: " + std::to_string(sun.mesh.scale));
     }
 
-    void Map::control_camera() {
+    void Map::control_camera(Vi::Window& window) {
+        Vi::Mouse& mouse = window.mouse();
+        double scroll = mouse.scroll();
+        double epsilon = scroll / 20.0;
+        scale *= (1.0 + epsilon);
 
+        if (mouse.pressing(GLFW_MOUSE_BUTTON_1)) {
+            const double sensitivity = 0.001;
+            Vi::Quat horizontal_rotation = Vi::Quat::rotation(Vi::Vec3d::yneg(), mouse.velocity().x * sensitivity);
+            Vi::Quat vertical_rotation = Vi::Quat::rotation(Vi::Vec3d::xneg(), mouse.velocity().y * sensitivity);
+            camera.orientation = camera.orientation * horizontal_rotation * vertical_rotation;
+        }
+
+        camera.orientation = camera.orientation.normalized();
+        camera.position = Vi::Vec3d::rotate(Vi::Vec3d::zpos(), camera.orientation);
     }
 }
 

@@ -33,8 +33,12 @@ namespace App {
     public:
         Map();
         void render(Vi::Window&);
-        void control_camera();
+        void control_camera(Vi::Window&);
+        
+        Vi::ID sun_id = Vi::InvalidID;
         Vi::SiVector<Planet> planets{};
+        
+        double scale = 1.0;
         Vi::Camera camera{};
     };
 }
