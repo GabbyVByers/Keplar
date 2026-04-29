@@ -3,6 +3,11 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# Ignore VS 2022
+*.sln
+*.vcxproj
+*.vcxproj.filters
+
 # User-specific files
 *.rsuser
 *.suo
