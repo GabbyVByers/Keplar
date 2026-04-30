@@ -27,6 +27,8 @@ namespace App {
         friend Map;
         Vi::Vec3d init_pos{};
         Vi::Vec3d init_vel{};
+        double radius{};
+        double mass{};
     };
 
     class Map {

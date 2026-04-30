@@ -11,6 +11,8 @@ namespace App {
         /* The Sun */
         Planet sun{};
         sun.name = "Sol";
+        sun.radius = 695700.0;
+        sun.mass = 1.988416E+30;
         sun_id = planets.add(sun);
         Planet& s = planets.get_element_by_id(sun_id);
         s.self_id = sun_id;
@@ -45,6 +47,12 @@ namespace App {
                     sstream >> planet.init_vel.y;
                     sstream >> token; if (token != "VZ") { Vi::Log::warning("Expected 'Z' (" + token + ")"); }
                     sstream >> planet.init_vel.z;
+
+                    sstream >> token; if (token != "R") { Vi::Log::warning("Expected 'R' (" + token + ")"); }
+                    sstream >> planet.radius;
+                    sstream >> token; if (token != "M") { Vi::Log::warning("Expected 'M' (" + token + ")"); }
+                    sstream >> planet.mass;
+
                     Vi::ID id = planets.add(planet);
                     Planet& p = planets.get_element_by_id(id);
                     p.self_id = id;
@@ -80,6 +88,12 @@ namespace App {
                     sstream >> moon.init_vel.y;
                     sstream >> token; if (token != "VZ") { Vi::Log::warning("Expected 'Z' (" + token + ")"); }
                     sstream >> moon.init_vel.z;
+
+                    sstream >> token; if (token != "R") { Vi::Log::warning("Expected 'R' (" + token + ")"); }
+                    sstream >> moon.radius;
+                    sstream >> token; if (token != "M") { Vi::Log::warning("Expected 'M' (" + token + ")"); }
+                    sstream >> moon.mass;
+
                     Vi::ID id = planets.add(moon);
                     Planet& m = planets.get_element_by_id(id);
                     m.self_id = id;
@@ -138,6 +152,8 @@ namespace App {
                 Vi::Log::info("Vx: " + std::to_string(planet.init_vel.x));
                 Vi::Log::info("Vy: " + std::to_string(planet.init_vel.y));
                 Vi::Log::info("Vz: " + std::to_string(planet.init_vel.z));
+                Vi::Log::info("Radius: " + std::to_string(planet.radius));
+                Vi::Log::info("Mass: " + std::to_string(planet.mass));
                 std::cout << std::endl;
             }
         }
@@ -150,14 +166,15 @@ namespace App {
 
     void Map::render(Vi::Window& window) {
         for (Planet& planet : planets) {
-            planet.mesh.scale = scale; // not scaled to planet radius
-            planet.mesh.position = planet.init_pos * scale;
+            planet.mesh.scale = planet.radius * scale;
+            //planet.mesh.position = planet.init_pos * scale;
 
             window.draw(planet.mesh, camera);
         }
 
         Planet& sun = planets.get_element_by_id(sun_id);
-        Vi::Log::info("Sun Mesh Radius: " + std::to_string(sun.mesh.scale));
+        Planet& mercury = planets.get_element_by_id(sun.child_ids[0]);
+        Vi::Log::info("Mercury Mesh Radius: " + std::to_string(mercury.mesh.scale));
     }
 
     void Map::control_camera(Vi::Window& window) {
@@ -167,10 +184,12 @@ namespace App {
         scale *= (1.0 + epsilon);
 
         if (mouse.pressing(GLFW_MOUSE_BUTTON_1)) {
-            const double sensitivity = 0.001;
-            Vi::Quat horizontal_rotation = Vi::Quat::rotation(Vi::Vec3d::yneg(), mouse.velocity().x * sensitivity);
-            Vi::Quat vertical_rotation = Vi::Quat::rotation(Vi::Vec3d::xneg(), mouse.velocity().y * sensitivity);
-            camera.orientation = camera.orientation * horizontal_rotation * vertical_rotation;
+            const double sensitivity = -0.001;
+            Vi::Vec2d mouse_vel = mouse.velocity();
+            Vi::Quat horizontal_rotation = Vi::Quat::rotation(Vi::Vec3d::ypos(), mouse_vel.x * sensitivity);
+            Vi::Quat vertical_rotation = Vi::Quat::rotation(camera.right(), mouse_vel.y * sensitivity);
+            camera.orientation = horizontal_rotation * camera.orientation;
+            camera.orientation = vertical_rotation * camera.orientation;
         }
 
         camera.orientation = camera.orientation.normalized();
