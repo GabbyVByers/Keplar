@@ -24,12 +24,9 @@ namespace Vi {
     class Camera;
     class Mesh;
     class Shapes;
-
     class Keyboard;
     class Mouse;
     class Window;
-
-    /* Color, Vertex, Camera, Mesh, Shapes */
 
     class Color {
     public:
@@ -108,8 +105,6 @@ namespace Vi {
         Shapes(const Shapes&) = delete;
         Shapes(Shapes&&) noexcept = delete;
     };
-
-    /* Keyboard, Mouse, Window */
 
     class Keyboard {
     public:

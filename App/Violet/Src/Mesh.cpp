@@ -191,8 +191,9 @@ namespace Vi {
             return buffer.str();
         };
 
-        std::string vert_source = load("App/Violet/Src/Shaders/" + path + ".vert");
-        std::string frag_source = load("App/Violet/Src/Shaders/" + path + ".frag");
+        std::string root = __FILE__;
+        std::string vert_source = load(root + "../../Shaders/" + path + ".vert");
+        std::string frag_source = load(root + "../../Shaders/" + path + ".frag");
         const char* vert_c_str = vert_source.c_str();
         const char* frag_c_str = frag_source.c_str();
 

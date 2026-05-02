@@ -207,6 +207,17 @@
     <None Include="App\Violet\Src\Shaders\default.frag" />
     <None Include="App\Violet\Src\Shaders\default.vert" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="App\Resources\Textures\Earth.png" />
+    <Image Include="App\Resources\Textures\Jupiter.png" />
+    <Image Include="App\Resources\Textures\Mars.png" />
+    <Image Include="App\Resources\Textures\Mercury.png" />
+    <Image Include="App\Resources\Textures\Neptune.png" />
+    <Image Include="App\Resources\Textures\Pluto.png" />
+    <Image Include="App\Resources\Textures\Saturn.png" />
+    <Image Include="App\Resources\Textures\Uranus.png" />
+    <Image Include="App\Resources\Textures\Venus.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

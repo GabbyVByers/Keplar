@@ -5,6 +5,8 @@
 
 #pragma once
 
+#include "Logging.h"
+
 #include <vector>
 #include <string>
 #include <iostream>
@@ -77,21 +79,19 @@ namespace Vi {
             return element_id;
         }
         
-        type& get_element_by_id(const ID element_id) {
+        type& get(const ID element_id) {
             if (!is_valid_id(element_id)) {
-                std::cerr << "\033[31mError:\033[0m ";
-                std::cerr << "Invalid element ID: (" + std::to_string(element_id) + ")\n";
-                assert(false);
+                Log::error("get(): Invalid ID: " + std::to_string(element_id));
+                std::terminate();
             }
             size_t element_index = index_from_id[element_id];
             return data[element_index];
         }
 
-        const type& get_element_by_id(const ID element_id) const {
+        const type& get(const ID element_id) const {
             if (!is_valid_id(element_id)) {
-                std::cerr << "\033[31mError:\033[0m ";
-                std::cerr << "Invalid element ID: (" + std::to_string(element_id) + ")\n";
-                assert(false);
+                Log::error("get(): Invalid ID: " + std::to_string(element_id));
+                std::terminate();
             }
             size_t element_index = index_from_id[element_id];
             return data[element_index];
@@ -115,7 +115,7 @@ namespace Vi {
         std::vector<size_t> id_from_index{};
         std::vector<type> data{};
         
-        bool is_valid_id(const ID element_id) {
+        bool is_valid_id(const ID element_id) const {
             if (element_id >= index_from_id.size())
                 return false;
             size_t element_index = index_from_id[element_id];

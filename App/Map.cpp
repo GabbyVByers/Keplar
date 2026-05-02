@@ -11,10 +11,12 @@ namespace App {
         /* The Sun */
         Planet sun{};
         sun.name = "Sol";
+        sun.type = Planet::TYPE::SUN;
         sun.radius = 695700.0;
         sun.mass = 1.988416E+30;
         sun_id = planets.add(sun);
-        Planet& s = planets.get_element_by_id(sun_id);
+        focus_id = sun_id;
+        Planet& s = planets.get(sun_id);
         s.self_id = sun_id;
 
         /* planets.txt */
@@ -52,9 +54,10 @@ namespace App {
                     sstream >> planet.radius;
                     sstream >> token; if (token != "M") { Vi::Log::warning("Expected 'M' (" + token + ")"); }
                     sstream >> planet.mass;
+                    planet.type = Planet::TYPE::PLANET;
 
                     Vi::ID id = planets.add(planet);
-                    Planet& p = planets.get_element_by_id(id);
+                    Planet& p = planets.get(id);
                     p.self_id = id;
                     p.parent_id = sun_id;
                 }
@@ -93,9 +96,10 @@ namespace App {
                     sstream >> moon.radius;
                     sstream >> token; if (token != "M") { Vi::Log::warning("Expected 'M' (" + token + ")"); }
                     sstream >> moon.mass;
+                    moon.type = Planet::TYPE::MOON;
 
                     Vi::ID id = planets.add(moon);
-                    Planet& m = planets.get_element_by_id(id);
+                    Planet& m = planets.get(id);
                     m.self_id = id;
                     m.parent_id = parent_planet_id;
                 }
@@ -108,7 +112,7 @@ namespace App {
                 if (child.self_id == parent.self_id)
                     continue;
                 if (child.parent_id == parent.self_id) {
-                    parent.child_ids.push_back(child.self_id);
+                    parent.child_ids.add(child.self_id);
                 }
             }
         }
@@ -119,28 +123,36 @@ namespace App {
             planet.init_vel *= 1000.0;
         }
 
-        /* Relative to Parents */
-        for (Planet& planet : planets) {
-            if (planet.parent_id == Vi::InvalidID)
-                continue;
-            if (planet.parent_id == Vi::InvalidID)
-                continue;
-        }
+        ///* Relative to Parents */
+        //for (Planet& planet : planets) {
+        //    if (planet.parent_id == Vi::InvalidID)
+        //        continue;
+        //}
 
         { /* Debugging -- can be removed */
             for (const Planet& planet : planets) {
                 Vi::Log::info(planet.name);
                 Vi::Log::info("ID: " + std::to_string(planet.self_id));
+                
+                if (planet.type == Planet::TYPE::SUN) {
+                    Vi::Log::info("TYPE: Sun");
+                }
+                if (planet.type == Planet::TYPE::PLANET) {
+                    Vi::Log::info("TYPE: Planet");
+                }
+                if (planet.type == Planet::TYPE::MOON) {
+                    Vi::Log::info("TYPE: Moon");
+                }
 
                 if (planet.parent_id != Vi::InvalidID) {
-                    const Planet& parent = planets.get_element_by_id(planet.parent_id);
+                    const Planet& parent = planets.get(planet.parent_id);
                     Vi::Log::info("Parent: " + parent.name);
                 }
 
                 if (planet.child_ids.size() > 0) {
                     std::string children_list = "Children: ";
                     for (Vi::ID child_id : planet.child_ids) {
-                        const Planet& child = planets.get_element_by_id(child_id);
+                        const Planet& child = planets.get(child_id);
                         children_list += (child.name + " ");
                     }
                     Vi::Log::info(children_list);
@@ -167,14 +179,9 @@ namespace App {
     void Map::render(Vi::Window& window) {
         for (Planet& planet : planets) {
             planet.mesh.scale = planet.radius * scale;
-            //planet.mesh.position = planet.init_pos * scale;
-
+            planet.mesh.position = planet.init_pos * scale;
             window.draw(planet.mesh, camera);
         }
-
-        Planet& sun = planets.get_element_by_id(sun_id);
-        Planet& mercury = planets.get_element_by_id(sun.child_ids[0]);
-        Vi::Log::info("Mercury Mesh Radius: " + std::to_string(mercury.mesh.scale));
     }
 
     void Map::control_camera(Vi::Window& window) {

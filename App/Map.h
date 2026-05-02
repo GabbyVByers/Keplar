@@ -18,13 +18,22 @@ namespace App {
 
     class Planet {
     public:
+
+        enum class TYPE {
+            NONE,
+            SUN,
+            PLANET,
+            MOON
+        };
+
         std::string name{};
+        TYPE type = TYPE::NONE;
         Vi::ID self_id = Vi::InvalidID;
         Vi::ID parent_id = Vi::InvalidID;
-        std::vector<Vi::ID> child_ids{};
+        Vi::SiVector<Vi::ID> child_ids{};
+
         Vi::Mesh mesh{};
-    private:
-        friend Map;
+
         Vi::Vec3d init_pos{};
         Vi::Vec3d init_vel{};
         double radius{};
@@ -41,6 +50,7 @@ namespace App {
         Vi::SiVector<Planet> planets{};
         
         double scale = 1.0;
+        Vi::ID focus_id = Vi::InvalidID;
         Vi::Camera camera{};
     };
 }
