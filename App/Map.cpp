@@ -173,12 +173,25 @@ namespace App {
         /* Planet Meshies */
         for (Planet& planet : planets) {
             planet.mesh = Vi::Shapes::sphere(10);
+            planet.mesh.paint(Vi::Color::white());
+            if (planet.type == Planet::TYPE::PLANET) {
+                planet.mesh.texture("App/Resources/Textures/" + planet.name + ".png");
+            }
         }
     }
 
     void Map::render(Vi::Window& window) {
         for (Planet& planet : planets) {
+            if (planet.type != Planet::TYPE::PLANET)
+                continue;
+
+
             planet.mesh.scale = planet.radius * scale;
+
+            if (planet.mesh.scale < 0.1) {
+                planet.mesh.scale = 0.1;
+            }
+
             planet.mesh.position = planet.init_pos * scale;
             window.draw(planet.mesh, camera);
         }

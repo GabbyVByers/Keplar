@@ -49,7 +49,7 @@ namespace App {
         Vi::ID sun_id = Vi::InvalidID;
         Vi::SiVector<Planet> planets{};
         
-        double scale = 1.0;
+        double scale = 1.0E-12;
         Vi::ID focus_id = Vi::InvalidID;
         Vi::Camera camera{};
     };

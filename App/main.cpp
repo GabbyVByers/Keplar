@@ -17,6 +17,8 @@ int main() {
         map.control_camera(window);
         map.render(window);
         window.display();
+
+        std::cout << map.scale << "\n";
     }
 
     return 0;
